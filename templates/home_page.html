@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Peptide Builder</title>
+        
+        <div class="container">
+            <h2> Peptide Builder</h2>
+            <form method="post"> {% csrf_token %}
+                    {{ form}}
+                    {{ form1.as_p }}
+                    {{ form2.as_p }}
+                    {{ form3.as_p }}
+                <input type="submit" class="btn btn-primary"  value="Enumerate Peptides">
+            </form>
+        </div>
+    </head>
+</html>
