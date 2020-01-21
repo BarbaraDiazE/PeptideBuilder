@@ -20,7 +20,7 @@ from django.conf.urls import url
 from Build import views
 
 urlpatterns = [
-    url(r'^$', views.ServerViews.as_view(), name = "home page"),
-    url(r'drop/', views.DropViews.as_view(), name = "drop"),
+    #url(r'^$', views.ServerViews.as_view(), name = "home page"),
+    url(r'form/', views.ServerViews.as_view(), name = "drop"),
     path('admin/', admin.site.urls),
 ]

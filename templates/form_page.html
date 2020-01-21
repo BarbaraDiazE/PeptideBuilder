@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Peptide Builder</title>
+        <link rel="stylesheet" href= "{% static "css\mystyle.css" %}" />
+    </head>
+<body>
+  <div class = "container">
+    <h1>Peptide Builder</h1>
+    <h2>A chemoinformatic tool for peptide numerations</h2>
+  </div>
+</body>
+<body>
+    <div class = "container"></div> <!--Amino Acids-->
+        <form method="post"> {% csrf_token %}
+        <h3>Step 1. Select amino acids</h3>
+        <div class="dropdown"><!--First Smiles-->
+                <label>First position</label>
+                <button onclick="myFunction()" class="dropbtn">Options</button>
+                <div class="dropdown-content">
+                        {{ form.first }}
+                </div>
+        </div>
+        <div class="dropdown"><!--Linear Smiles-->
+                <label>Linear</label>
+                <button onclick="myFunction()" class="dropbtn">Options</button>
+                <div class="dropdown-content">
+                        {{ form.linear}}
+                </div>
+        </div>     
+        <div class="dropdown"> <!--Methylated Smiles-->
+                <label >Methylated</label>
+                <button onclick="myFunction()" class="dropbtn">Options</button>
+                <div class="dropdown-content">
+                        {{ form.methylated}}
+                </div>
+        </div>
+    <div class = "container"> <!--Topology-->
+        <h3>Step 2. Select desired topologies</h3>
+        <div class="dropdown">
+                <label >Topology</label>
+                <button onclick="myFunction()" class="dropbtn">Options</button>
+                <div class="dropdown-content">
+                        {{ form.topology }}
+                </div>
+        </div>
+    </div>
+    <div class = "container"><!--Length and submit-->
+        <h3>Step 3. Select peptides length</h3>
+        <h4>{{ form.length }}</h4>  
+        <h3>Step 4. Numerate peptides libraries</h3>    
+        <input type="submit" value="Submit"  onclick="alert('peptides are on constructions!')">
+    </div>          
+   </form>
+
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
