@@ -27,7 +27,7 @@ class ServerViews(APIView):
             print(form.length)
             n = Numerate(form.first[0], form.linear, form.methylated, form.topology, form.length)
             DF = n.write_databases()
-            
+            print(DF.head())
             now = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f'database_{now}.csv'
             route = f'generated_csv/{filename}'
