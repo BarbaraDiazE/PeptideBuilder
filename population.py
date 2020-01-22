@@ -5,7 +5,7 @@ import django
 django.setup()
 
 from Build.models import AminoAcid, DataAminoAcids
-from Build.amino_acid import dict_amino_acid
+from modules.build.amino_acid import dict_amino_acid
 
 data = dict_amino_acid
 list_aminoacids = ["ALA", "CYS", "ASP", "GLU", "PHE", "HIS",  "ILE", "LYS", "LEU", "MET", "ASN", "PRO", "GLN", "ARG", "SER", "THR", "VAL", "TRP", "TYR", "GLY"]

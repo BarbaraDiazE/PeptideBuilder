@@ -1,7 +1,9 @@
 """Numerate peptides from amino acids"""
-from .amino_acid import dict_amino_acid
-from .models import AminoAcid, DataAminoAcids, Oxygen
-from Build.combinations import combine_linear_smiles, combine_cyclic_smiles, combine_abbreviations
+from Build.models import AminoAcid, DataAminoAcids, Oxygen
+from .combinations import combine_linear_smiles, combine_cyclic_smiles, combine_abbreviations
+from modules.descriptors.descriptors import compute_descriptors
+
+import pandas as pd
 
 class Numerate:
 
@@ -60,14 +62,29 @@ class Numerate:
             if (self.topology[i]) == "linear":
                 linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
                 linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+                linear_library = ["linear" for _ in linear_peptides]
             elif (self.topology[i]) == "cyclic":
                 cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
                 cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-            
-        return linear_peptides, cyclic_peptides, linear_abbreviations, cyclic_abbreviations  
+                cyclic_library = ["cyclic" for _ in cyclic_peptides]
+        smiles = linear_peptides + cyclic_peptides
+        ids = linear_abbreviations + cyclic_abbreviations
+        libraries = linear_library + cyclic_library
+        return smiles, ids, libraries
 
     def write_databases(self):
-        linear_peptides, cyclic_peptides, linear_abbreviations, cyclic_abbreviations   = self.numerate()
-        print("linear_peptides", linear_peptides[10])
-        print("linear_abbreviations", linear_abbreviations[10])
-        print("cyclic_peptides", cyclic_peptides[10])
+        smiles, ids, libraries = self.numerate()
+        HBA, HBD, RB, LOGP, TPSA, MW = compute_descriptors(smiles)
+        data = {
+                    "SMILES": smiles,
+                    "Sequence": ids,
+                    "Library": libraries,
+                    "HBA": HBA,
+                    "HBD": HBD,
+                    "RB": RB,
+                    "LOGP": LOGP,
+                    "TPSA": TPSA,
+                    "MW": MW 
+                }
+        DF = pd.DataFrame.from_dict(data)
+        return DF

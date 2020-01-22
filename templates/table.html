@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+        <head>
+                <title>Peptide Builder</title>
+                <link rel="stylesheet" href= "{% static "css\mystyle.css" %}" />
+        </head>
+        <body>
+                <div class = "container">
+                        <h2>Peptide numerated libraries</h2>
+                </div>
+                <div class="container">
+                        <h3><a href="/">Home</a></h3>
+                        <h5><input type="button" value="Download CSV"
+                            onclick="window.location.href='/download_csv'">
+                        </h5>
+                </div>
+                <div class="container">
+                        {{loaded_data | safe}}
+                </div>
+                
+        </body>
+        

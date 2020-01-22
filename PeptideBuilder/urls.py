@@ -22,5 +22,6 @@ from Build import views
 urlpatterns = [
     #url(r'^$', views.ServerViews.as_view(), name = "home page"),
     url(r'form/', views.ServerViews.as_view(), name = "drop"),
+    url(r'^csv/(?P<csv_name>.+)/$', views.CSVView.as_view()),
     path('admin/', admin.site.urls),
 ]

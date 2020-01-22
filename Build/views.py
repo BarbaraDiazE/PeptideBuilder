@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
 from rest_framework.views import APIView
 
+import os, glob, csv
+import pandas as pd
+from datetime import datetime
+
 from .forms import InputForm
-from Build.numerate import Numerate
+from modules.build.numerate import Numerate
 
 
 class ServerViews(APIView):
@@ -22,8 +26,15 @@ class ServerViews(APIView):
             print(form.topology)
             print(form.length)
             n = Numerate(form.first[0], form.linear, form.methylated, form.topology, form.length)
-            n.write_databases()
-            return HttpResponse("AMINOACIDOS SELECCIONADOS")
+            DF = n.write_databases()
+            
+            now = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f'database_{now}.csv'
+            route = f'generated_csv/{filename}'
+            request.session['csv_name'] = filename
+            download_csv = DF.to_csv(route, encoding='utf-8', index = True)
+            return redirect(f'/csv/{filename}/')
+            #return HttpResponse("AMINOACIDOS SELECCIONADOS")
         return render(request,'form_page.html',context = form_dict)
 
     def get(self, request):
@@ -32,3 +43,12 @@ class ServerViews(APIView):
                     'form' : form,
                     }
         return render(request,'form_page.html',context = form_dict)
+
+class CSVView(APIView):
+    def get(self, request, csv_name):
+        data = pd.read_csv(f'generated_csv/{csv_name}')
+        data_html = data.to_html()
+        context = {'loaded_data': data_html}
+        return render(request, 'table.html', context)
+
+
