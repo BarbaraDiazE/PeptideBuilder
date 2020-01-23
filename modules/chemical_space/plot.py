@@ -29,7 +29,7 @@ class Plot:
         p = figure(title = "Chemical Space by PCA",
                 x_axis_label = "PC 1", y_axis_label="PC 2",
                 x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
-        #p.add_tools(LassoSelectTool(), ZoomInTool(), ZoomOutTool(), SaveTool(), PanTool())
+        p.add_tools(LassoSelectTool(), ZoomInTool(), ZoomOutTool(), SaveTool(), PanTool())
         p.add_tools(SaveTool())
         FDA_plot = p.circle(x = "x", y = "y", source = source1, color = "darkslateblue", size = 5)
         PPI_plot = p.circle(x = "x", y = "y", source = source2, color = "yellowgreen", size = 5)
@@ -50,7 +50,6 @@ class Plot:
                 location = "center", orientation = "vertical", click_policy = "hide"
             )
         p.add_layout(legend, place = 'right')
-        p.add_tools(SaveTool())
         p.xaxis.axis_label_text_font_size = "20pt"
         p.yaxis.axis_label_text_font_size = "20pt"
         p.xaxis.axis_label_text_color = "black"
