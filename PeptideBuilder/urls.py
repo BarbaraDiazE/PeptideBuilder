@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 
-from Build import views
+from Build.views import ServerViews, CSVView
+from chemical_space.views import ChemicalSpaceView
 
 urlpatterns = [
     #url(r'^$', views.ServerViews.as_view(), name = "home page"),
-    url(r'^$', views.ServerViews.as_view(), name = "home page"),
-    url(r'^csv/(?P<csv_name>.+)/$', views.CSVView.as_view()),
+    url(r'^$', ServerViews.as_view(), name = "home page"),
+    url(r'^csv/(?P<csv_name>.+)/$',CSVView.as_view()),
+    url(r'^chemspace/', ChemicalSpaceView.as_view()),
     path('admin/', admin.site.urls),
 ]

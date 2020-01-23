@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Visualize Chemical Space</title>
+        <link rel="stylesheet" href= "{% static "css\mystyle.css" %}" />
+    </head>
+<body>
+        <h2>
+                <a href="/">Back to home</a>
+        </h2>
+        <div class="container">
+              {{ div | safe }}
+              <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+              {{ script | safe }}
+        </div>
+</body>
+</html>
+    
