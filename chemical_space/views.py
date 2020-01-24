@@ -37,11 +37,10 @@ class ChemicalSpaceView(APIView):
             else:
                 pass
             if len(form.tsne_fp) > 0: #TSNE FINGERPRINT
-                parameter = form.tsne_fp[0]
-                #print(type(parameter), parameter)
-                matrix_fp, ref = FP(csv_name, parameter).compute()
-                result, model = performTSNE().tsne_fingerprint(matrix_fp, ref)
-                plot = Plot(result).plot_tsne(parameter)
+                fp_name = form.tsne_fp[0]
+                matrix_fp, ref = FP(csv_name, fp_name).compute()
+                result, model = performTSNE().tsne_fingerprint(matrix_fp, ref, fp_name)
+                plot = Plot(result).plot_tsne(fp_name)
                 script, div = components(plot)
                 return render_to_response('plot_pca.html', {'script': script, 'div': div})
             if len(form.pca_pp) > 0: #PCA DESCRIPTORS

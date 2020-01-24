@@ -13,11 +13,7 @@ class FP:
 
     def __init__(self, csv_name, parameter):
         self.parameter = parameter
-        numerated_libraries = pd.read_csv(f'generated_csv/{csv_name}', index_col= "Unnamed: 0")
-        reference_libraries = pd.read_csv('modules/reference_libraries.csv', index_col= "Unnamed: 0")
-        #reference_libraries = pd.read_csv(f'modules/databases/reference_libraries_{parameter}.csv', index_col= "Unnamed: 0")
-        Data = pd.concat([numerated_libraries, reference_libraries], axis = 0)
-        Data = Data.reset_index()
+        Data = pd.read_csv(f'generated_csv/{csv_name}', index_col= "Unnamed: 0")
         self.smiles = Data.SMILES
         _ = ["Sequence", "Library"]
         self.ref = Data[_]
@@ -57,7 +53,7 @@ class FP:
         return fp
 
     def compute(self):
-        ref = self.ref
+        ref = self.ref.to_numpy()
         if self.parameter == "MACCS Keys":
             fp = self.maccskeys_fp()
             matrix_fp = self.fp_matrix(fp)
@@ -80,6 +76,3 @@ class FP:
             return matrix_fp, ref
         else:
             return ("Not allow")
-        #else:
-        #    pass
-        #return matrix_fp, ref
