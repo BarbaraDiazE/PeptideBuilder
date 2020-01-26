@@ -26,12 +26,12 @@ class ChemicalSpaceView(APIView):
         if form.is_valid():
             form = form.save()
             if len(form.pca_fp) > 0: #PCA FINGERPRINT
-                parameter = form.pca_fp[0]
-                print(type(parameter), parameter)
-                matrix_fp, ref = FP(csv_name, parameter).compute()
+                fp_name = form.pca_fp[0]
+                print(type(fp_name), fp_name)
+                matrix_fp, ref = FP(csv_name, fp_name).compute()
                 #matrix_fp = pd.DataFrame(matrix_fp)
-                result, model = performPCA().pca_fingerprint(matrix_fp, ref)
-                plot = Plot(result).plot_pca(parameter)
+                result, model = performPCA().pca_fingerprint(matrix_fp, ref, fp_name)
+                plot = Plot(result).plot_pca(fp_name)
                 script, div = components(plot)
                 return render_to_response('plot_pca.html', {'script': script, 'div': div})
             else:

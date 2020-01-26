@@ -5,7 +5,6 @@ perform tSNE analysis
 import pandas as pd
 import numpy as np
 
-#import sklearn
 import sklearn
 from sklearn import datasets, decomposition
 from sklearn.manifold import TSNE
@@ -42,7 +41,7 @@ class performTSNE:
     def tsne_fingerprint(self, fp_matrix,  ref, fp_name):
         fp_name = fp_name.replace(' ', '')
         reference_libraries = pd.read_csv(f'modules/reference_libraries_{fp_name}.csv', index_col= "Unnamed: 0")
-        reference = reference_libraries.select_dtypes(exclude=['object']).to_numpy()
+        reference = reference_libraries.select_dtypes(exclude=['object']).as_matrix()
         numerical = np.concatenate((fp_matrix, reference), axis = 0)
         model = TSNE(n_components=2,
                         init='pca',
@@ -51,7 +50,7 @@ class performTSNE:
                         perplexity=30
                         ).fit_transform(numerical)
         result = pd.DataFrame(data = model, columns=["PC 1","PC 2"])
-        ref_libraries = reference_libraries.select_dtypes(include=['object']).to_numpy()
+        ref_libraries = reference_libraries.select_dtypes(include=['object']).as_matrix()
         ref_final = np.concatenate((ref, ref_libraries), axis = 0)
         result = np.concatenate((result, ref_final), axis = 1)
         result = pd.DataFrame(data=result, columns = ["PC 1", "PC 2", "Sequence", "Library"])
