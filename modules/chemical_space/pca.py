@@ -38,7 +38,7 @@ class performPCA:
         return result, model
 
     def pca_fingerprint(self, fp_matrix, ref, fp_name):
-        fp_name = fp_name.replace(' ', '')
+        fp_name = fp_name[0].replace(' ', '')
         reference_libraries = pd.read_csv(f'modules/reference_libraries_{fp_name}.csv', index_col= "Unnamed: 0")
         reference = reference_libraries.select_dtypes(exclude=['object']).as_matrix()
         numerical = np.concatenate((fp_matrix, reference), axis = 0)

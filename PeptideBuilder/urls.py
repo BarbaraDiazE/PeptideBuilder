@@ -19,11 +19,13 @@ from django.conf.urls import url
 
 from Build.views import ServerViews, CSVView
 from chemical_space.views import ChemicalSpaceView
+from diversity_analysis.views import DiversityAnalysisView
 
 urlpatterns = [
     #url(r'^$', views.ServerViews.as_view(), name = "home page"),
     url(r'^$', ServerViews.as_view(), name = "home page"),
     url(r'^csv/(?P<csv_name>.+)/$',CSVView.as_view()),
     url(r'^chemspace/', ChemicalSpaceView.as_view()),
+    url(r'^diversity/', DiversityAnalysisView.as_view()),
     path('admin/', admin.site.urls),
 ]

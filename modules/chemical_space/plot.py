@@ -4,7 +4,9 @@ from bokeh.plotting import figure
 from bokeh.core.enums import LegendLocation
 import os
 from modules.chemical_space.column_source import column_source
-
+"""
+Plot chemical space
+"""
 class Plot:
     def __init__(self, result):
         self.result = result
@@ -26,7 +28,7 @@ class Plot:
         #p = figure(title = "Chemical Space by PCA",
         #        x_axis_label = "PC 1 " + "("+str(a)+"%)", y_axis_label="PC 2 " + "("+str(b)+"%)",
         #        x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
-        p = figure(title = "PCA based on: " + parameter,
+        p = figure(title = "PCA based on: " + parameter[0],
                 x_axis_label = "PC 1", y_axis_label="PC 2",
                 x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
         p.add_tools(LassoSelectTool(), ZoomInTool(), ZoomOutTool(), SaveTool(), PanTool())
@@ -74,7 +76,7 @@ class Plot:
                                         ("PCA 2","$y"),
                                         ("NAME","@N"),
                                         ])
-        p = figure(title = "tSNE based on " + parameter,
+        p = figure(title = "tSNE based on " + parameter[0],
                 x_axis_label = "PC 1", y_axis_label="PC 2",
                 x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
         p.add_tools(LassoSelectTool(), ZoomInTool(), ZoomOutTool(), SaveTool(), PanTool())

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Build',
-    'chemical_space'
+    'chemical_space',
+    'diversity_analysis'
 ]
 
 MIDDLEWARE = [
