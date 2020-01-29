@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PeptideBuilder.settings')
 import django
 django.setup()
 
-from Build.models import AminoAcid, DataAminoAcids
+from apps.Build.models import AminoAcid, DataAminoAcids
 from modules.build.amino_acid import dict_amino_acid
 
 data = dict_amino_acid
