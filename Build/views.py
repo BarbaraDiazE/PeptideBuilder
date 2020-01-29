@@ -20,14 +20,8 @@ class ServerViews(APIView):
                     }
         if form.is_valid():
             form = form.save()
-            print(form.first)
-            print(form.linear)
-            print(form.methylated)
-            print(form.topology)
-            print(form.length)
             n = Numerate(form.first[0], form.linear, form.methylated, form.topology, form.length)
             DF = n.write_databases()
-            print(DF.head())
             now = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f'database_{now}.csv'
             route = f'generated_csv/{filename}'
@@ -51,4 +45,12 @@ class CSVView(APIView):
         context = {'loaded_data': data_html}
         return render(request, 'table.html', context)
 
+class DownloadCSV(APIView):
+    def get(self, request):
+        csv_name = request.session['csv_name']
+        filename = f'generated_csv/{csv_name}'
+        with open(filename, 'rb') as csv_file:
+            response = HttpResponse(csv_file, content_type="text/csv")
+            response['Content-Disposition'] = f'attachment; filename = numerated_peptides.csv'
+            return response
 

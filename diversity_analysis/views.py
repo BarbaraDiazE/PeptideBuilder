@@ -12,6 +12,7 @@ from diversity_analysis.forms import Diversity_Analysis_Form
 
 from modules.fingerprint.compute_fingerprint import FP
 from modules.diversity_analysis.plot_diversity import Plot
+from modules.diversity_analysis.stats import Stat
 
 class DiversityAnalysisView(APIView):
     
@@ -25,7 +26,9 @@ class DiversityAnalysisView(APIView):
             result = FP(csv_name, fp_name).similarity(fp_name)
             plot = Plot(result).plot_similarity(fp_name)
             script, div = components(plot)
-            return render_to_response('plot.html', {'script': script, 'div': div})
+            stats = Stat().statistical_values(result)
+            stats = stats.to_html()
+            return render_to_response('plot_diversity.html', {'script': script, 'div': div, "stats":stats})
         return render(request,'diversity_analysis.html', context = form_dict)
 
     def get(self, request):
@@ -33,3 +36,4 @@ class DiversityAnalysisView(APIView):
         csv_name = request.session['csv_name']  
         form_dict = {'form' : form, }
         return render(request,'diversity_analysis.html', context = form_dict)
+

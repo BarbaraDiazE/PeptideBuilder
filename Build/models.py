@@ -52,8 +52,8 @@ topology = (("linear", "linear"),
 
 class DataFormulary(models.Model):
     first = MultiSelectField(verbose_name="First position", choices=Keys, max_choices=1)
-    linear = MultiSelectField(verbose_name="Linear", choices=Keys, max_choices=20)
-    methylated = MultiSelectField(verbose_name="Methylated", choices=Keys, max_choices=20)
-    topology = MultiSelectField(verbose_name= "Topology", choices=topology, max_choices=2)
+    linear = MultiSelectField(verbose_name="Linear", choices=Keys, max_choices=20,  blank=True)
+    methylated = MultiSelectField(verbose_name="Methylated", choices=Keys, max_choices=20,  blank=True)
+    topology = MultiSelectField(verbose_name= "Topology", choices=topology, max_choices=2,  blank=True)
     length = models.IntegerField(verbose_name="Length", name= "length")
    

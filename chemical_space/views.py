@@ -27,7 +27,6 @@ class ChemicalSpaceView(APIView):
             form = form.save()
             if len(form.pca_fp) > 0: #PCA FINGERPRINT
                 fp_name = form.pca_fp
-                print(type(fp_name), fp_name)
                 matrix_fp, ref = FP(csv_name, fp_name).compute_asmatrix()
                 #matrix_fp = pd.DataFrame(matrix_fp)
                 result, model = performPCA().pca_fingerprint(matrix_fp, ref, fp_name)
@@ -51,9 +50,7 @@ class ChemicalSpaceView(APIView):
             else:
                 pass
             if len(form.tsne_pp) > 0: #TSNE DESCRIPTORS
-                print("form.tsne_pp", form.tsne_pp)
                 result, model = performTSNE().tsne_descriptors(csv_name)
-                print(result)
                 plot = Plot(result).plot_tsne("physicochemical properties")
                 script, div = components(plot)
                 return render_to_response('plot.html', {'script': script, 'div': div})

@@ -1,11 +1,13 @@
-"""Numerate peptides from amino acids"""
+
+import pandas as pd
 from Build.models import AminoAcid, DataAminoAcids, Oxygen
 from .combinations import combine_linear_smiles, combine_cyclic_smiles, combine_abbreviations
 from modules.descriptors.descriptors import compute_descriptors
 
-import pandas as pd
-
 class Numerate:
+    """
+    Numerate peptides from amino acids
+    """
 
     def __init__(self, first , linear, methylated, topology, length):
         self.first = first
@@ -16,11 +18,18 @@ class Numerate:
         print("soy clase numerate")
     
     def get_first(self):
+        """
+        return, first(smiles from database)
+        """
         _ = AminoAcid.objects.filter(amino_acid = self.first)[0]
         first = DataAminoAcids.objects.filter(name = _).all()[0].first_smile
         return first
 
     def get_dataset(self):
+        """
+        return 
+        dataset, list that contains amino acid smiles (methyladed and linear from database)
+        """
         linear_qs = AminoAcid.objects.filter(amino_acid__in=self.linear)\
             .values_list('data__linear_smile')
         methylated_qs = AminoAcid.objects.filter(amino_acid__in=self.methylated)\
@@ -31,6 +40,10 @@ class Numerate:
         return dataset
     
     def get_abreviations(self):
+        """
+        return
+        first_abbreviation and  abbreviations, letter representation for amino acids selected
+        """
         _ = AminoAcid.objects.filter(amino_acid = self.first)[0]
         first_abbreviation = DataAminoAcids.objects.filter(name = _).all()[0].first_abbreviation
         linear_abbreviations_qs = AminoAcid.objects.filter(amino_acid__in=self.linear)\
@@ -44,6 +57,10 @@ class Numerate:
         
         
     def get_oxygen(self):
+        """
+        return
+        linear, cyclic are oxygen smiles accord to peptide length and libraries' topology
+        """
         linear = str()
         linear = Oxygen.objects.filter(oxygen_id = self.length)[0].linear
         cyclic = str()
@@ -52,31 +69,55 @@ class Numerate:
         
 
     def numerate(self):
+        """
+        return
+        smiles, Canonical smiles of generated libraries
+        ids, sequence peptide representation
+        libraries, list with libraries' name
+        """
         first = self.get_first()
         dataset = self.get_dataset()
         first_abbreviation, abbreviations = self.get_abreviations()
         linear, cyclic = self.get_oxygen()
-        linear_peptides = list()
-        cyclic_peptides = list()
         for i in range(len(self.topology)):
             if (self.topology[i]) == "linear":
                 linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
                 linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
                 linear_library = ["linear" for _ in linear_peptides]
-            elif (self.topology[i]) == "cyclic":
+                print(linear_peptides[:5])
+                return linear_peptides, linear_abbreviations, linear_library
+            else:
+                pass
+            if (self.topology[i]) == "cyclic":
                 cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
                 cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
                 cyclic_library = ["cyclic" for _ in cyclic_peptides]
-        smiles = linear_peptides + cyclic_peptides
-        ids = linear_abbreviations + cyclic_abbreviations
-        libraries = linear_library + cyclic_library
-        return smiles, ids, libraries
+                return cyclic_peptides, cyclic_abbreviations, cyclic_library
+            else:
+                pass
+            if (self.topology[i]) == "linear" and (self.topology[i]) == "cyclic":
+                linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
+                linear_peptides = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+                linear_library = ["linear" for _ in linear_peptides]
+                cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
+                cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+                cyclic_library = ["cyclic" for _ in cyclic_peptides]
+                smiles = linear_peptides + cyclic_peptides
+                ids = linear_abbreviations + cyclic_abbreviations
+                libraries = linear_library + cyclic_library
+                return smiles, ids, libraries
+            else:
+                pass
 
     def write_databases(self):
+        """
+        return 
+        DF, Dataframe with numerated libraries, and physicochemical descriptors
+        """
         smiles, ids, libraries = self.numerate()
-        HBA, HBD, RB, LOGP, TPSA, MW = compute_descriptors(smiles)
+        CanonicalSMILES, HBA, HBD, RB, LOGP, TPSA, MW = compute_descriptors(smiles)
         data = {
-                    "SMILES": smiles,
+                    "SMILES": CanonicalSMILES,
                     "Sequence": ids,
                     "Library": libraries,
                     "HBA": HBA,
