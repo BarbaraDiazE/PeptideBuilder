@@ -4,17 +4,19 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PeptideBuilder.settings')
 import django
 django.setup()
 
-from apps.Build.models import AminoAcid, DataAminoAcids
+from apps.Build.models import AminoAcid, DataAminoAcids, Oxygen
 from modules.build.amino_acid import dict_amino_acid
+from modules.build.oxygen import dict_oxygen
 
 data = dict_amino_acid
 list_aminoacids = ["ALA", "CYS", "ASP", "GLU", "PHE", "HIS",  "ILE", "LYS", "LEU", "MET", "ASN", "PRO", "GLN", "ARG", "SER", "THR", "VAL", "TRP", "TYR", "GLY"]
+
 def add_aminoacid(amino):
     A = AminoAcid.objects.get_or_create(amino_acid = amino)[0]
     A.save()
     return A
 
-def populate(amino):
+def populate_amino_acid(amino):
     a = DataAminoAcids(
                 name = add_aminoacid(amino),
                 first_smile = data[amino]["first_smile"],
@@ -26,7 +28,21 @@ def populate(amino):
     )
     a.save()
     return a 
+
+def populate_oxygen(length):
+    b = Oxygen(
+                oxygen_id = dict_oxygen[length],
+                linear = dict_oxygen[length]["linear"],
+                cyclic = dict_oxygen[length]["cyclic"],
+    )
+    b.save()
+    print(b)
+    return b
+list_length = [2,3,4,5,6]
+
 if __name__ == "__main__":
     for i in range(len(list_aminoacids)):
-        populate(list_aminoacids[i])
+        populate_amino_acid(list_aminoacids[i])
+    #for i in list_length:
+    #    populate_oxygen(i)
 print("population is done")
