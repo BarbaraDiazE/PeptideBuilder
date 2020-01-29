@@ -16,8 +16,7 @@ class Numerate:
         self.methylated = methylated
         self.topology = topology
         self.length = length
-        print("soy clase numerate")
-    
+        
     def get_first(self):
         """
         return, first(smiles from database)
@@ -81,24 +80,9 @@ class Numerate:
         first_abbreviation, abbreviations = self.get_abreviations()
         linear, cyclic = self.get_oxygen()
         for i in range(len(self.topology)):
-            if (self.topology[i]) == "linear":
+            if (self.topology[i]) == "linear" and (self.topology[i+1]) == "cyclic":
                 linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
                 linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                linear_library = ["linear" for _ in linear_peptides]
-                print(linear_peptides[:5])
-                return linear_peptides, linear_abbreviations, linear_library
-            else:
-                pass
-            if (self.topology[i]) == "cyclic":
-                cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
-                cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                cyclic_library = ["cyclic" for _ in cyclic_peptides]
-                return cyclic_peptides, cyclic_abbreviations, cyclic_library
-            else:
-                pass
-            if (self.topology[i]) == "linear" and (self.topology[i]) == "cyclic":
-                linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
-                linear_peptides = combine_abbreviations(first_abbreviation, abbreviations, self.length)
                 linear_library = ["linear" for _ in linear_peptides]
                 cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
                 cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
@@ -107,8 +91,18 @@ class Numerate:
                 ids = linear_abbreviations + cyclic_abbreviations
                 libraries = linear_library + cyclic_library
                 return smiles, ids, libraries
+            elif (self.topology[i]) == "linear":
+                linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
+                linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+                linear_library = ["linear" for _ in linear_peptides]
+                return linear_peptides, linear_abbreviations, linear_library
+            elif (self.topology[i]) == "cyclic":
+                cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
+                cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+                cyclic_library = ["cyclic" for _ in cyclic_peptides]
+                return cyclic_peptides, cyclic_abbreviations, cyclic_library
             else:
-                pass
+                return "no idea"
 
     def write_databases(self):
         """

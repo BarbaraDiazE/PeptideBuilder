@@ -31,18 +31,19 @@ def populate_amino_acid(amino):
 
 def populate_oxygen(length):
     b = Oxygen(
-                oxygen_id = dict_oxygen[length],
+                oxygen_id = length,
                 linear = dict_oxygen[length]["linear"],
                 cyclic = dict_oxygen[length]["cyclic"],
     )
     b.save()
-    print(b)
     return b
-list_length = [2,3,4,5,6]
 
 if __name__ == "__main__":
     for i in range(len(list_aminoacids)):
         populate_amino_acid(list_aminoacids[i])
-    #for i in list_length:
-    #    populate_oxygen(i)
+
+list_length = [2,3,4,5,6]
+if __name__ == "__main__":
+    for i in list_length:
+        populate_oxygen(i)
 print("population is done")

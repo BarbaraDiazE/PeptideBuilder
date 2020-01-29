@@ -2,8 +2,8 @@
 
 dict_oxygen = {
                 2: {
-                    "linear":"(O)=O)=O",                         
-                    "cyclic" : "%99:O):O"                                    
+                    "linear" : "(O)=O)=O",                         
+                    "cyclic" : "%99=O)=O"                                    
                     },                                               
                 3: {
                     "linear" : "(O)=O)=O)=O", 
@@ -22,3 +22,4 @@ dict_oxygen = {
                     "cyclic" : "%99=O)=O)=O)=O)=O)=O"
                     }                      
                 }
+

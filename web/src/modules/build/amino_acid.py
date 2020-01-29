@@ -60,7 +60,7 @@ dict_amino_acid = {
                                 "first_abbreviation": "I",
                                 "linear_smile" : "(N[C@@H]([C@@H](C)CC)C",
                                 "linear_abbreviation" : "I",
-                                "methylated_smile": "(N(C)[C@@H]([C@@H](C)CC)C ",
+                                "methylated_smile": "(N(C)[C@@H]([C@@H](C)CC)C",
                                 "methylated_abbreviation": "I"
                             },
                     "LYS":{
@@ -182,25 +182,3 @@ dict_amino_acid = {
                             },
                 }
 
-oxygen = {
-            2: {
-                    "linear": "(O)=O)=O",
-                    "cyclic": "%99=O)=O"
-                },
-            3:  {
-                    "linear": "(O)=O)=O)=O",
-                    "cyclic": "%99=O)=O)=O"
-                },
-            4:  {
-                    "linear": "(O)=O)=O)=O)=O",
-                    "cyclic": "%99=O)=O)=O)=O"
-                },
-            5:  {
-                    "linear": "(O)=O)=O)=O)=O)=O",
-                    "cyclic": "%99=O)=O)=O)=O)=O"
-                },
-            6:  {
-                    "linear": "(O)=O)=O)=O)=O)=O)=O",
-                    "cyclic": "%99=O)=O)=O)=O)=O)=O"
-                }
-}

@@ -22,7 +22,10 @@ class performTSNE:
             result: DataFrame whit tSNE result
         """
         numerated_libraries = pd.read_csv(f'generated_csv/{csv_name}', index_col= "Unnamed: 0")
+        if numerated_libraries.shape[0] > 1001:
+            numerated_libraries = numerated_libraries.sample(500, replace=True, random_state=1992)
         reference_libraries = pd.read_csv(f'modules/reference_libraries.csv', index_col= "Unnamed: 0")
+        reference_libraries = reference_libraries.sample(frac=0.2, replace=True, random_state=1992)
         Data = pd.concat([numerated_libraries, reference_libraries], axis = 0)
         Data = Data.reset_index()
         _ = ["SMILES", "Sequence", "Library"]
@@ -41,6 +44,8 @@ class performTSNE:
     def tsne_fingerprint(self, fp_matrix,  ref, fp_name):
         fp_name = fp_name[0].replace(' ', '')
         reference_libraries = pd.read_csv(f'modules/reference_libraries_{fp_name}.csv', index_col= "Unnamed: 0")
+        reference_libraries = reference_libraries.sample(frac=0.2, replace=True, random_state=1992)
+        #print(reference_libraries)
         reference = reference_libraries.select_dtypes(exclude=['object']).as_matrix()
         numerical = np.concatenate((fp_matrix, reference), axis = 0)
         model = TSNE(n_components=2,
@@ -54,5 +59,4 @@ class performTSNE:
         ref_final = np.concatenate((ref, ref_libraries), axis = 0)
         result = np.concatenate((result, ref_final), axis = 1)
         result = pd.DataFrame(data=result, columns = ["PC 1", "PC 2", "Sequence", "Library"])
-        print(result)
-        return result, model
+        return result

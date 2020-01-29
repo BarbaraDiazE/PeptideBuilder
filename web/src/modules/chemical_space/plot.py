@@ -25,9 +25,6 @@ class Plot:
                                         ("PCA 2","$y"),
                                         ("NAME","@N"),
                                         ])
-        #p = figure(title = "Chemical Space by PCA",
-        #        x_axis_label = "PC 1 " + "("+str(a)+"%)", y_axis_label="PC 2 " + "("+str(b)+"%)",
-        #        x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
         p = figure(title = "PCA based on: " + parameter[0],
                 x_axis_label = "PC 1", y_axis_label="PC 2",
                 x_range = (-7,7), y_range = (-7,7), tools = [hover], plot_width = 1000, plot_height = 800)
@@ -37,7 +34,7 @@ class Plot:
         PPI_plot = p.circle(x = "x", y = "y", source = source2, color = "yellowgreen", size = 5)
         MACRO_plot = p.circle(x = "x", y = "y", source = source3, color ="lightsteelblue", size = 5)
         NP_plot = p.circle(x = "x", y = "y", source = source4, color = "olive", size = 5)
-        PEP_FDA_plot = p.circle(x = "x", y = "y", source = source5, color ="darkslategray", size = 5)
+        PEP_FDA_plot = p.circle(x = "x", y = "y", source = source5, color ="lightcoral", size = 5)
         LIN_plot = p.circle(x = "x", y = "y", source = source6, color = "teal", size = 5)
         CYC_plot = p.circle(x = "x", y = "y", source = source7, color = "mediumvioletred", size = 5)
         legend = Legend(items=[
@@ -85,7 +82,7 @@ class Plot:
         PPI_plot = p.circle(x = "x", y = "y", source = source2, color = "yellowgreen", size = 5)
         MACRO_plot = p.circle(x = "x", y = "y", source = source3, color ="lightsteelblue", size = 5)
         NP_plot = p.circle(x = "x", y = "y", source = source4, color = "olive", size = 5)
-        PEP_FDA_plot = p.circle(x = "x", y = "y", source = source5, color ="darkslategray", size = 5)
+        PEP_FDA_plot = p.circle(x = "x", y = "y", source = source5, color ="lightcoral", size = 5)
         LIN_plot = p.circle(x = "x", y = "y", source = source6, color = "teal", size = 5)
         CYC_plot = p.circle(x = "x", y = "y", source = source7, color = "mediumvioletred", size = 5)
         legend = Legend(items=[

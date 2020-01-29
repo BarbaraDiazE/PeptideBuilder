@@ -1,5 +1,4 @@
 env/
-web/src/generated_csv/*
 
 *.pyc
 */__pycache__/

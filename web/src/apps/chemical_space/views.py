@@ -28,7 +28,6 @@ class ChemicalSpaceView(APIView):
             if len(form.pca_fp) > 0: #PCA FINGERPRINT
                 fp_name = form.pca_fp
                 matrix_fp, ref = FP(csv_name, fp_name).compute_asmatrix()
-                #matrix_fp = pd.DataFrame(matrix_fp)
                 result, model = performPCA().pca_fingerprint(matrix_fp, ref, fp_name)
                 plot = Plot(result).plot_pca(fp_name)
                 script, div = components(plot)
@@ -38,25 +37,25 @@ class ChemicalSpaceView(APIView):
             if len(form.tsne_fp) > 0: #TSNE FINGERPRINT
                 fp_name = form.tsne_fp
                 matrix_fp, ref = FP(csv_name, fp_name).compute_asmatrix()
-                result, model = performTSNE().tsne_fingerprint(matrix_fp, ref, fp_name)
+                result = performTSNE().tsne_fingerprint(matrix_fp, ref, fp_name)
+                print(result.head())
                 plot = Plot(result).plot_tsne(fp_name)
                 script, div = components(plot)
                 return render_to_response('plot.html', {'script': script, 'div': div})
             if len(form.pca_pp) > 0: #PCA DESCRIPTORS
                 result, model = performPCA().pca_descriptors(csv_name)
-                plot = Plot(result).plot_pca("physicochemical properties")
+                plot = Plot(result).plot_pca(["physicochemical properties"])
                 script, div = components(plot)
                 return render_to_response('plot.html', {'script': script, 'div': div})
             else:
                 pass
             if len(form.tsne_pp) > 0: #TSNE DESCRIPTORS
                 result, model = performTSNE().tsne_descriptors(csv_name)
-                plot = Plot(result).plot_tsne("physicochemical properties")
+                plot = Plot(result).plot_tsne(["physicochemical properties"])
                 script, div = components(plot)
                 return render_to_response('plot.html', {'script': script, 'div': div})
             else:
                 pass
-        #    return HttpResponse("You selected an option")
         else:
             print("no idea")
         return render(request,'chemical_space.html', context = form_dict)

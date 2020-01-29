@@ -28,7 +28,6 @@ class ServerViews(APIView):
             request.session['csv_name'] = filename
             download_csv = DF.to_csv(route, encoding='utf-8', index = True)
             return redirect(f'/csv/{filename}/')
-            #return HttpResponse("AMINOACIDOS SELECCIONADOS")
         return render(request,'form_page.html',context = form_dict)
 
     def get(self, request):
