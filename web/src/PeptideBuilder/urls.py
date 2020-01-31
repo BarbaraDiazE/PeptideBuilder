@@ -17,17 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 
-from apps.Build.views import ServerViews, CSVView, DownloadCSV
+from apps.Build.views import ServerViews, CSVView, DownloadCSV, ContactView
 from apps.chemical_space.views import ChemicalSpaceView
 from apps.diversity_analysis.views import DiversityAnalysisView
 
 urlpatterns = [
-    #url(r'^$', views.ServerViews.as_view(), name = "home page"),
     url(r'^$', ServerViews.as_view(), name = "home page"),
     url(r'^download_csv$', DownloadCSV.as_view()),
     url(r'^csv/(?P<csv_name>.+)/$',CSVView.as_view()),
     url(r'^chemspace/', ChemicalSpaceView.as_view()),
     url(r'^diversity/', DiversityAnalysisView.as_view()),
+    url(r'^contact/', ContactView.as_view()),
     path('admin/', admin.site.urls),
 ]
 

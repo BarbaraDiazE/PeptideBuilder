@@ -91,7 +91,7 @@ class FP:
                     }
         pep_result = pd.DataFrame.from_dict(pep_result)
         ref_data = pd.read_csv(f'modules/similatiry_reference_libraries_{fp_name}.csv', index_col= "Unnamed: 0")
-        ref_data = ref_data.sample(frac=0.1, replace=True, random_state=1992)
+        #ref_data = ref_data.sample(frac=0.1, replace=True, random_state=1992)
         result = pd.concat([pep_result, ref_data], axis = 0)
         return result
         

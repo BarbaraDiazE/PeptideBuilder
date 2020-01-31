@@ -33,7 +33,6 @@ class DiversityAnalysisView(APIView):
 
     def get(self, request):
         form = Diversity_Analysis_Form(request.POST)
-        csv_name = request.session['csv_name']  
         form_dict = {'form' : form, }
         return render(request,'diversity_analysis.html', context = form_dict)
 

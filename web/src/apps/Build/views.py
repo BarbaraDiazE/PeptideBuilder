@@ -53,3 +53,7 @@ class DownloadCSV(APIView):
             response['Content-Disposition'] = f'attachment; filename = numerated_peptides.csv'
             return response
 
+class ContactView(APIView):
+    def get(self, request):
+        #context = {'contact': contact}
+        return render(request, 'contact.html')
