@@ -28,11 +28,10 @@ class DiversityAnalysisView(APIView):
             script, div = components(plot)
             stats = Stat().statistical_values(result)
             stats = stats.to_html()
-            return render_to_response('plot_diversity.html', {'script': script, 'div': div, "stats":stats})
+            return render_to_response('plot_diversity.html', {'script': script, 'div': div, "stats":stats}), result
         return render(request,'diversity_analysis.html', context = form_dict)
 
     def get(self, request):
         form = Diversity_Analysis_Form(request.POST)
         form_dict = {'form' : form, }
         return render(request,'diversity_analysis.html', context = form_dict)
-

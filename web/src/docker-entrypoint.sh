@@ -7,4 +7,5 @@
 /opt/conda/envs/rdkit-env/bin/gunicorn \
     PeptideBuilder.wsgi \
     --bind 0.0.0.0:8000 \
-    --workers 3
+    --timeout 3000 \
+    --workers 4
