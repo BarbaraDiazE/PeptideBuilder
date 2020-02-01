@@ -15,7 +15,7 @@ def column_source(result, Library):
     """
 
     DF = result[result["Library"] == Library]
-    X = np.asarray(DF["sim"])
-    Y = np.asarray(DF["y"])
+    X = np.array(DF["sim"])
+    Y = np.array(DF["y"])
         
     return ColumnDataSource(dict(x = X, y = Y))

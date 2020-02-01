@@ -79,30 +79,31 @@ class Numerate:
         dataset = self.get_dataset()
         first_abbreviation, abbreviations = self.get_abreviations()
         linear, cyclic = self.get_oxygen()
-        for i in range(len(self.topology)):
-            if (self.topology[i]) == "linear" and (self.topology[i+1]) == "cyclic":
-                linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
-                linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                linear_library = ["linear" for _ in linear_peptides]
-                cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
-                cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                cyclic_library = ["cyclic" for _ in cyclic_peptides]
-                smiles = linear_peptides + cyclic_peptides
-                ids = linear_abbreviations + cyclic_abbreviations
-                libraries = linear_library + cyclic_library
-                return smiles, ids, libraries
-            elif (self.topology[i]) == "linear":
-                linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
-                linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                linear_library = ["linear" for _ in linear_peptides]
-                return linear_peptides, linear_abbreviations, linear_library
-            elif (self.topology[i]) == "cyclic":
-                cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
-                cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
-                cyclic_library = ["cyclic" for _ in cyclic_peptides]
-                return cyclic_peptides, cyclic_abbreviations, cyclic_library
-            else:
-                return "no idea"
+        #for i in range(len(self.topology)):
+        if len(self.topology) == 2:
+            #(self.topology[0]) == "linear" and (self.topology[1]) == "cyclic":
+            linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
+            linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+            linear_library = ["linear" for _ in linear_peptides]
+            cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
+            cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+            cyclic_library = ["cyclic" for _ in cyclic_peptides]
+            smiles = linear_peptides + cyclic_peptides
+            ids = linear_abbreviations + cyclic_abbreviations
+            libraries = linear_library + cyclic_library
+            return smiles, ids, libraries
+        elif (self.topology[0]) == "linear":
+            linear_peptides = combine_linear_smiles(first, dataset, self.length, linear)
+            linear_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+            linear_library = ["linear" for _ in linear_peptides]
+            return linear_peptides, linear_abbreviations, linear_library
+        elif (self.topology[0]) == "cyclic":
+            cyclic_peptides = combine_cyclic_smiles(first, dataset, self.length, cyclic)
+            cyclic_abbreviations = combine_abbreviations(first_abbreviation, abbreviations, self.length)
+            cyclic_library = ["cyclic" for _ in cyclic_peptides]
+            return cyclic_peptides, cyclic_abbreviations, cyclic_library
+        else:
+            return "no idea"
 
     def write_databases(self):
         """

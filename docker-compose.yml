@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     networks: 
       - nginx_network
-
+    
   nginx:
     image: nginx
     ports:

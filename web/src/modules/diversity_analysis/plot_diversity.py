@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np
-#import random
-#import itertools as it
 
 from bokeh.io import  show, output_file
 from bokeh.models import ColumnDataSource, LassoSelectTool, ZoomInTool, ZoomOutTool, SaveTool, HoverTool,PanTool, Legend
@@ -12,9 +10,6 @@ from bokeh.core.enums import LegendLocation
 Plot diversity anslysis result
 """
 
-properties = ["SMILES","Library"]
-lista = []
-df = []
 from bokeh.io import  show, output_file
 from bokeh.models import ColumnDataSource, LassoSelectTool, ZoomInTool, ZoomOutTool, SaveTool, HoverTool, PanTool, Legend
 from bokeh.plotting import figure
