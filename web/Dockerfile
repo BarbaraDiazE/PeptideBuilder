@@ -4,9 +4,10 @@ RUN conda create -c rdkit -n rdkit-env rdkit -y
 
 WORKDIR /src
 
-RUN /opt/conda/envs/rdkit-env/bin/pip install --upgrade pip
+RUN /opt/conda/envs/rdkit-env/bin/python -m pip install --upgrade pip
+# RUN /opt/conda/envs/rdkit-env/bin/pip install --upgrade pip
 ADD config/requirements.txt .
-RUN /opt/conda/envs/rdkit-env/bin/pip install -r requirements.txt
+RUN /opt/conda/envs/rdkit-env/bin/pip install --ignore-installed -r requirements.txt
 
 ADD ./src/ .
 
